@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load render_table from django_tables2 %}
+{% load bootstrap4 %}
+
+{% block content %}
+  <p>Ενεργός χρήστης: {{ user.username }}</p>
+  <p>
+    <a href="{% url 'metakinhsh_add' %}" class="btn btn-success">Προσθήκη μετακίνησης</a>
+  </p>
+  {% if filter %}
+    <form action="" method="get" class="form form-inline">
+        {% bootstrap_form filter.form layout='inline' %}
+        {% bootstrap_button 'Εύρεση' %}
+    </form>
+  {% endif %}
+  {% render_table table %}
+  <p>
+    <a href="{% url 'logout_user' %}" class="btn btn-danger">Αποσύνδεση</a>
+  </p>
+{% endblock %}

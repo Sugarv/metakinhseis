@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+  <head>
+    <script src="http://code.jquery.com/jquery-1.9.1.js">
+    </script>
+    <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js">
+    </script>
+    <script type="text/javascript" src="{% static 'bootstrap-tab.js' %}">  </script>
+  </head>
+  <h2>Καταχώρηση προγράμματος</h2>
+  <p><small><a href="/metakinhseis/">Επιστροφή σε Αρχική σελίδα</a></small></p>
+  {% crispy form %}
+{% endblock %}
