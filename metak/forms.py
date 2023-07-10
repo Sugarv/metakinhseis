@@ -12,6 +12,15 @@ class MetakinhshForm(forms.ModelForm):
         model = Metakinhsh
         fields = '__all__'
         exclude = ['person',]
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        egkrish = cleaned_data.get('egkrish')
+
+        if egkrish and self.instance.pk:
+            raise forms.ValidationError("Σφάλμα: Δεν μπορούν να γίνουν αλλαγές αφού εγκριθεί η μετακίνηση. Παρακαλώ επικοινωνήστε με τη διαχείριση...")
+
+        return cleaned_data
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
