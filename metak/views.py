@@ -13,6 +13,7 @@ from django.contrib import messages
 from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.messages.views import SuccessMessageMixin
 import django_tables2 as tables
 from django_tables2 import SingleTableView
 from django_filters.views import FilterView
@@ -67,7 +68,7 @@ class MetakinhshCreateView(LoginRequiredMixin, CreateView):
         return super(MetakinhshCreateView, self).form_valid(form)
 
 
-class MetakinhshUpdateView(LoginRequiredMixin, UpdateView):
+class MetakinhshUpdateView(LoginRequiredMixin, UpdateView, SuccessMessageMixin):
     login_url = '/metakinhseis/login'
     # do not redirect after login
     def get_redirect_field_name(self, **kwargs):
@@ -76,6 +77,11 @@ class MetakinhshUpdateView(LoginRequiredMixin, UpdateView):
     form_class = MetakinhshForm
     template_name = 'metak/metakinhsh_update_form.html'
     success_url = reverse_lazy('metakinhsh_list')
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, 'Επιτυχής αποθήκευση!')
+        return response
 
 
 def index(request):

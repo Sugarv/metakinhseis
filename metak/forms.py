@@ -13,11 +13,14 @@ class MetakinhshForm(forms.ModelForm):
         fields = '__all__'
         exclude = ['person',]
     
+    # if egkrish is set, disallow update
+    # allow only when user sets pragmat
     def clean(self):
         cleaned_data = super().clean()
         egkrish = cleaned_data.get('egkrish')
+        pragmat = cleaned_data.get('pragmat')
 
-        if egkrish and self.instance.pk:
+        if egkrish and not pragmat and self.instance.pk:
             raise forms.ValidationError("Σφάλμα: Δεν μπορούν να γίνουν αλλαγές αφού εγκριθεί η μετακίνηση. Παρακαλώ επικοινωνήστε με τη διαχείριση...")
 
         return cleaned_data
