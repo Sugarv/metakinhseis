@@ -10,6 +10,11 @@ from django.db import models
 from django.conf import settings
 # from django.core.validators import RegexValidator
 from django.urls import reverse
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.core.mail import send_mail
+from django.conf import settings
+
 
 class Metakinhsh(models.Model):
   metak_from = models.CharField('Από', max_length=100)
@@ -30,3 +35,17 @@ class Metakinhsh(models.Model):
     return f'{self.person.last_name} -> {self.metak_to} @ {self.date_from}'
   def get_absolute_url(self): # new
     return reverse('metakinhsh_list')#, args=[str(self.id)])
+
+# Use signals to send_mail when a new object is created in Metakinhsh
+@receiver(post_save, sender=Metakinhsh)
+def send_email(sender, instance, created, **kwargs):
+    if created:
+        fname = instance.person.first_name + ' ' + instance.person.last_name
+        formatted_date = instance.date_from.strftime("%d/%m/%Y")
+        subject = 'Νέα Μετακίνηση'
+        message = f'<h3>Εισαγωγή νέας μετακίνησης</h3><br>Σύμβουλος εκπαίδευσης: <b>{fname}</b><br>Ημερομηνία: <b>{formatted_date}</b><br>\
+          Προορισμός: <b>{instance.metak_to}</b><br>Αιτιολογία: <b>{instance.aitiologia}</b>'
+        from_email = settings.DEFAULT_FROM_EMAIL
+        recipient_list = settings.RECIPIENT_LIST  # Replace with the desired recipient email addresses
+        # print(message)
+        send_mail(subject, message, from_email, recipient_list, html_message=message)
