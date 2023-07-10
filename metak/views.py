@@ -65,7 +65,9 @@ class MetakinhshCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.person = self.request.user
         # Call super-class form validation behaviour
-        return super(MetakinhshCreateView, self).form_valid(form)
+        response = super().form_valid(form)
+        messages.success(self.request, 'Επιτυχής καταχώρηση!')
+        return response
 
 
 class MetakinhshUpdateView(LoginRequiredMixin, UpdateView, SuccessMessageMixin):
