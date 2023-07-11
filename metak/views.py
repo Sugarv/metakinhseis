@@ -15,7 +15,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 import django_tables2 as tables
-from django_tables2 import SingleTableView
+# from django_tables2 import SingleTableView
 from django_filters.views import FilterView
 from django_tables2.views import SingleTableMixin
 from django_filters import FilterSet, DateRangeFilter
@@ -61,9 +61,15 @@ class MetakinhshCreateView(LoginRequiredMixin, CreateView):
     form_class = MetakinhshForm
     template_name = 'metak/metakinhsh_form.html'
 
-    #Add logged-in user as person of metakinhsh
+    # Manipulate form data before saving...
     def form_valid(self, form):
+        # Add logged-in user as person of metakinhsh
         form.instance.person = self.request.user
+        # assign transfer handler, depending on the km
+        if form.instance.km <= 50:
+             form.instance.handler = 'Επόπτης'
+        else:
+             form.instance.handler = 'Οικονομικό'
         # Call super-class form validation behaviour
         response = super().form_valid(form)
         messages.success(self.request, 'Επιτυχής καταχώρηση!')

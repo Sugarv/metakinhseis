@@ -12,7 +12,7 @@ class MetakinhshForm(forms.ModelForm):
     class Meta:
         model = Metakinhsh
         fields = '__all__'
-        exclude = ['person',]
+        exclude = ['person','handler']
     
     # if egkrish is set, disallow update
     # allow only when user sets pragmat

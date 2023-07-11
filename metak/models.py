@@ -26,7 +26,7 @@ class Metakinhsh(models.Model):
   pragmat = models.BooleanField('Πραγματοποιήθηκε', default=False)
   aitiologia = models.TextField('Αιτιολογία')
   person = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE, verbose_name='Χρήστης', null=True)
-  handler = models.CharField('Χειριστής',max_length=80,default=None,null=True,choices=(
+  handler = models.CharField('Χειριστής',max_length=80,default=None,blank=True,null=True,choices=(
       ('Επόπτης', 'Επόπτης'),('Οικονομικό', 'Οικονομικό')))
   
   class Meta:
@@ -35,6 +35,7 @@ class Metakinhsh(models.Model):
 
   def __str__(self):
     return f'{self.person.last_name} -> {self.metak_to} @ {self.date_from}'
+  
   def get_absolute_url(self): # new
     return reverse('metakinhsh_list')#, args=[str(self.id)])
 
