@@ -1,15 +1,23 @@
 from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
-from import_export import resources
-from django.contrib.admin import DateFieldListFilter
+from import_export import resources, fields
+# from django.contrib.admin import DateFieldListFilter
 from rangefilter.filters import DateRangeFilterBuilder, NumericRangeFilterBuilder
-from django_admin_listfilter_dropdown.filters import DropdownFilter, RelatedDropdownFilter, ChoiceDropdownFilter
+from django_admin_listfilter_dropdown.filters import DropdownFilter
+from django.contrib.auth.models import User
+from import_export.widgets import ForeignKeyWidget
 
 # Register your models here.
 from .models import Metakinhsh
 
 
 class MetakinhshResource(resources.ModelResource):
+    # used to declare foreign key @ field person
+    person = fields.Field(
+        column_name='person',
+        attribute='person',
+        widget=ForeignKeyWidget(User, field='id'))
+    
     class Meta:
         model = Metakinhsh
 

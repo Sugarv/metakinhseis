@@ -20,12 +20,14 @@ class Metakinhsh(models.Model):
   metak_from = models.CharField('Από', max_length=100)
   metak_to = models.CharField('Προορισμός', max_length=100)
   date_from = models.DateField('Ημ/νία Από')
-  date_to = models.DateField('Ημ/νία Έως')
+  date_to = models.DateField('Ημ/νία Έως',null=True)
   km = models.IntegerField('Χιλιόμετρα')
   egkrish = models.BooleanField('Έγκριση', default=False)
   pragmat = models.BooleanField('Πραγματοποιήθηκε', default=False)
   aitiologia = models.TextField('Αιτιολογία')
-  person = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE, verbose_name='Χρήστης')
+  person = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE, verbose_name='Χρήστης', null=True)
+  handler = models.CharField('Χειριστής',max_length=80,default=None,null=True,choices=(
+      ('Επόπτης', 'Επόπτης'),('Οικονομικό', 'Οικονομικό')))
   
   class Meta:
     verbose_name = 'Μετακίνηση'
