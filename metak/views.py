@@ -49,7 +49,7 @@ class MetakinhshListView(LoginRequiredMixin, SingleTableMixin, FilterView):
     filterset_class = MetakinhshFilter
     # show only current user's records
     def get_queryset(self):
-        return super().get_queryset().filter(person=self.request.user.id)
+        return super().get_queryset().filter(person=self.request.user.id).order_by('-date_from')
     
 
 class MetakinhshCreateView(LoginRequiredMixin, CreateView):
@@ -112,11 +112,11 @@ def login_request(request):
 			user = authenticate(username=username, password=password)
 			if user is not None:
 				login(request, user)
-				messages.info(request, f"You are now logged in as {username}.")
+				messages.info(request, f"Έχετε πραγματοποιήσει είσοδο ως {username}.")
 				return redirect("home")
 			else:
-				messages.error(request,"Invalid username or password.")
+				messages.error(request,"Εσφαλμένος κωδικός ή όνομα χρήστη")
 		else:
-			messages.error(request,"Invalid username or password.")
+			messages.error(request,"Εσφαλμένος κωδικός ή όνομα χρήστη")
 	form = AuthenticationForm()
 	return render(request=request, template_name="metak/login.html", context={"login_form":form})

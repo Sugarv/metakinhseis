@@ -19,15 +19,13 @@ class MetakinhshForm(forms.ModelForm):
     def clean(self):
         cleaned_data = super().clean()
         egkrish = cleaned_data.get('egkrish')
-        pragmat = cleaned_data.get('pragmat')
         date_from = cleaned_data.get('date_from')
         instance = getattr(self, 'instance', None)
 
         if not instance.pk and date_from and date_from < date.today():
             raise forms.ValidationError("Σφάλμα: Παρακαλώ επιλέξτε μια μελλοντική ημερομηνία.")
 
-
-        if egkrish and not pragmat and self.instance.pk:
+        if egkrish and instance and not 'pragmat' in self.changed_data:
             raise forms.ValidationError("Σφάλμα: Δεν μπορούν να γίνουν αλλαγές αφού εγκριθεί η μετακίνηση. Παρακαλώ επικοινωνήστε με τη διαχείριση...")
 
         return cleaned_data
