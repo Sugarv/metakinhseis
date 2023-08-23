@@ -18,6 +18,10 @@ from django.urls import include,path
 from django.contrib.auth import views as auth_views
 from metak import views as met_views
 
+admin.site.site_header = 'Μετακινήσεις Συμβούλων Εκπαίδευσης'
+admin.site.index_title = 'Διαχείριση'
+admin.site.site_url = '/metakinhseis'
+
 urlpatterns = [
     path('metakinhseis/', include('metak.urls')),
     path('admin/', admin.site.urls),
