@@ -1,5 +1,5 @@
 from django.contrib import admin
-from import_export.admin import ImportExportModelAdmin
+from import_export.admin import ExportMixin
 from import_export import resources, fields
 # from django.contrib.admin import DateFieldListFilter
 from rangefilter.filters import DateRangeFilterBuilder, NumericRangeFilterBuilder
@@ -28,7 +28,7 @@ class MetakinhshResource(resources.ModelResource):
         return '%s' % full_name
 
 
-class MetakinhshAdmin(ImportExportModelAdmin):
+class MetakinhshAdmin(ExportMixin, admin.ModelAdmin):
     resource_class = MetakinhshResource
     list_display = ('id','get_user', 'metak_to', 'date_from', 'egkrish','pragmat','km','handler')
     list_display_links = ('id','get_user')
