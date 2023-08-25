@@ -7,6 +7,4 @@ urlpatterns = [
     path('add/', MetakinhshCreateView.as_view(), name='metakinhsh_add'),
     path('edit/<int:pk>/', MetakinhshUpdateView.as_view(), name='metakinhsh_edit'),
     path('', views.index, name='home'),
-    path("login", views.login_request, name="login"),
-    path('logout/', views.logout_user, name='logout_user')
 ]

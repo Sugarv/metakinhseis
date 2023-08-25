@@ -30,6 +30,7 @@
                 <label for="password">Κωδικός</label>
                 <input type="password" class="form-control" name="password" id="password" placeholder="Κωδικός">
             </div>
+            <p><a href="{% url 'password_reset' %}">Ξεχάσατε το συνθηματικό σας;</a></p>
             <button type="submit" class="btn btn-primary">Είσοδος</button>
             <br />
             <div class="form-group">
@@ -40,7 +41,12 @@
                 {% endfor %}
             </div>
         </form>
-        
+        <footer class="text-center text-white">
+            <div class="text-center p-3" ><small>
+              <a href="https://dipeira.gov.gr/">© ΔΙ.Π.Ε. Ηρακλείου - Τμήμα Δ' Πληροφορικής & νέων Τεχνολογιών, 2023</a>
+            </small>
+            </div>
+          </footer>
 </body>
 
 </html>

@@ -25,4 +25,6 @@ admin.site.site_url = '/metakinhseis'
 urlpatterns = [
     path('metakinhseis/', include('metak.urls')),
     path('admin/', admin.site.urls),
+    path("accounts/", include("accounts.urls")), # new
+    path("accounts/", include("django.contrib.auth.urls")),
 ]

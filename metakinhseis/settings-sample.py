@@ -142,6 +142,8 @@ DJANGO_TABLES2_TABLE_ATTRS = {
     },
 }
 
+LOGIN_REDIRECT_URL = 'metakinhsh_list'
+
 EMAIL_HOST = ''
 EMAIL_PORT = 25
 EMAIL_HOST_USER = ''

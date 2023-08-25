@@ -1,21 +1,15 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 
 # Create your views here.
-from django.http import HttpResponse
 
-from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView
 from .models import Metakinhsh
 from .forms import MetakinhshForm
-# from django.contrib.auth.models import auth
 from django.contrib import messages
-from django.contrib.auth import logout, authenticate, login
-from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 import django_tables2 as tables
-# from django_tables2 import SingleTableView
 from django_filters.views import FilterView
 from django_tables2.views import SingleTableMixin
 from django_filters import FilterSet, DateRangeFilter
@@ -39,7 +33,7 @@ class MetakinhshFilter(FilterSet):
 
 # ListView - uses LoginRequiredMixin to ensure user is authenticated
 class MetakinhshListView(LoginRequiredMixin, SingleTableMixin, FilterView):
-    login_url = '/metakinhseis/login'
+    login_url = '/accounts/login'
     # do not redirect after login
     def get_redirect_field_name(self, **kwargs):
           return None
@@ -53,7 +47,7 @@ class MetakinhshListView(LoginRequiredMixin, SingleTableMixin, FilterView):
     
 
 class MetakinhshCreateView(LoginRequiredMixin, CreateView):
-    login_url = '/metakinhseis/login'
+    login_url = '/accounts/login'
     # do not redirect after login
     def get_redirect_field_name(self, **kwargs):
           return None
@@ -77,7 +71,7 @@ class MetakinhshCreateView(LoginRequiredMixin, CreateView):
 
 
 class MetakinhshUpdateView(LoginRequiredMixin, UpdateView, SuccessMessageMixin):
-    login_url = '/metakinhseis/login'
+    login_url = '/accounts/login'
     # do not redirect after login
     def get_redirect_field_name(self, **kwargs):
           return None
@@ -97,26 +91,3 @@ def index(request):
         return redirect('metakinhsh_list')
     else:
         return redirect('login')
-
-
-def logout_user(request):
-    logout(request)
-    return redirect('login')
-
-def login_request(request):
-	if request.method == "POST":
-		form = AuthenticationForm(request, data=request.POST)
-		if form.is_valid():
-			username = form.cleaned_data.get('username')
-			password = form.cleaned_data.get('password')
-			user = authenticate(username=username, password=password)
-			if user is not None:
-				login(request, user)
-				messages.info(request, f"Έχετε πραγματοποιήσει είσοδο ως {username}.")
-				return redirect("home")
-			else:
-				messages.error(request,"Εσφαλμένος κωδικός ή όνομα χρήστη")
-		else:
-			messages.error(request,"Εσφαλμένος κωδικός ή όνομα χρήστη")
-	form = AuthenticationForm()
-	return render(request=request, template_name="metak/login.html", context={"login_form":form})

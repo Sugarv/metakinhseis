@@ -10,10 +10,35 @@
     <title>Μετακινήσεις Σχολικών Συμβούλων</title>
   </head>
   <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="#">Μετακινήσεις Σχολικών Συμβούλων</a>
+      
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'metakinhsh_list' %}">Αρχική</a>
+          </li>
+          {% if user.is_authenticated %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {{ user.username }}
+            </a>
+            <div class="dropdown-menu dropdown-menu-right text-right" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{% url 'password_change' %}">Αλλαγή συνθηματικού</a>
+              <a class="dropdown-item" href="{% url 'logout_user' %}">Αποσύνδεση</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+
     <div class="container-fluid">
       <div class="row justify-content-center">
         <div class="col-10">
-          <h1 class="mt-2">Μετακινήσεις Σχολικών Συμβούλων</h1>
+          <h2 class="mt-2">Μετακινήσεις Σχολικών Συμβούλων</h2>
           <hr class="mt-0 mb-4">
           {% if messages %}
             {% for message in messages %}
@@ -31,5 +56,10 @@
         </div>
       </div>
     </div>
+    <footer class="text-center text-white" style="background-color: #BDBDBD">
+      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        <a class="text-white" href="https://dipeira.gov.gr/">© ΔΙ.Π.Ε. Ηρακλείου - Τμήμα Δ' Πληροφορικής & νέων Τεχνολογιών, 2023</a>
+      </div>
+    </footer>
   </body>
 </html>
