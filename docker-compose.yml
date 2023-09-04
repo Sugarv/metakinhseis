@@ -1,0 +1,26 @@
+# Source: https://testdriven.io/blog/dockerizing-django-with-postgres-gunicorn-and-nginx/
+version: '3.8'
+
+services:
+  web:
+    build: .
+    command: gunicorn metakinhseis.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - ./:/usr/src/app/
+      - ./db.sqlite3:/home/app/db.sqlite3
+      - static_volume:/home/app/web/staticfiles
+    expose:
+      - 8000
+    env_file:
+      - ./.env
+  nginx:
+    build: ./nginx
+    volumes:
+      - static_volume:/home/app/web/staticfiles
+    ports:
+      - 8080:80
+    depends_on:
+      - web
+
+volumes:
+  static_volume:
