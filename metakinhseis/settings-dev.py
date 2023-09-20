@@ -20,14 +20,14 @@ LOGIN_REDIRECT_URL = 'home/'
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = 'iyx7s!g8j7r+0g#a9j$me9oxcu*mar2w=b!rkm%mm2tzwi83&s'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(os.environ.get("DEBUG", default=0))
+DEBUG = True
 
 # 'DJANGO_ALLOWED_HOSTS' should be a single string of hosts with a space between each.
 # For example: 'DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]'
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
+ALLOWED_HOSTS = ['localhost']
 
 
 # Application definition
@@ -149,6 +149,7 @@ CSRF_TRUSTED_ORIGINS = ['http://localhost:8080']
 
 LOGIN_REDIRECT_URL = 'metakinhsh_list'
 
+# EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend" # new
 EMAIL_HOST = ''
 EMAIL_PORT = 25
 EMAIL_HOST_USER = ''
